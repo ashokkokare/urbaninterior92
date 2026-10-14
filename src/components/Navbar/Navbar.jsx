@@ -1,7 +1,10 @@
+import { useState } from "react";
 import uiLogo from "../../assets/uilogo.png";
 import "./Navbar.css";
 
 function Navbar({ sections, activeSection, darkMode, onToggleTheme }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <header className={`header ${darkMode ? "dark" : "light"}`}>
       <div className="header-inner">
@@ -9,11 +12,15 @@ function Navbar({ sections, activeSection, darkMode, onToggleTheme }) {
           <img src={uiLogo} alt="Urban Interior logo" className="logo-mark" />
           <span className="logo-text">
             <strong>Urban</strong>
-            <span>Interior</span>
+            <span>Decorator</span>
           </span>
         </a>
 
-        <nav className="navigation" aria-label="Main navigation">
+        <nav
+          id="main-navigation"
+          className={`navigation ${menuOpen ? "is-open" : ""}`}
+          aria-label="Main navigation"
+        >
           <ul className="nav-list">
             {sections.map((section) => (
               <li key={section.id} className="nav-item">
@@ -21,6 +28,7 @@ function Navbar({ sections, activeSection, darkMode, onToggleTheme }) {
                   href={`#${section.id}`}
                   className={activeSection === section.id ? "active" : ""}
                   aria-current={activeSection === section.id ? "page" : undefined}
+                  onClick={() => setMenuOpen(false)}
                 >
                   {section.label}
                 </a>
@@ -30,7 +38,12 @@ function Navbar({ sections, activeSection, darkMode, onToggleTheme }) {
         </nav>
 
         <div className="header-actions">
-          <button className="theme-toggle" onClick={onToggleTheme} aria-label="Toggle dark mode">
+          <button
+            type="button"
+            className="theme-toggle"
+            onClick={onToggleTheme}
+            aria-label="Toggle dark mode"
+          >
             <span className="toggle-track">
               <span className="toggle-dot"></span>
             </span>
@@ -40,7 +53,14 @@ function Navbar({ sections, activeSection, darkMode, onToggleTheme }) {
             Contact <span>→</span>
           </a>
 
-          <button className="burger" aria-label="Open menu">
+          <button
+            type="button"
+            className={`burger ${menuOpen ? "is-open" : ""}`}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            aria-controls="main-navigation"
+            onClick={() => setMenuOpen((open) => !open)}
+          >
             <span></span>
             <span></span>
             <span></span>
