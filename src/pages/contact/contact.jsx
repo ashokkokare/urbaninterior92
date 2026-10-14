@@ -108,7 +108,7 @@ function Contact() {
             name="name"
             type="text"
             autoComplete="name"
-            placeholder="e.g. Priya Sharma"
+            placeholder="Ashok Karande"
             required
           />
 
